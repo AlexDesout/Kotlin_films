@@ -1,6 +1,7 @@
 package com.example.navigation
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.padding
@@ -25,10 +26,11 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
             val navBackStackEntry by navController.currentBackStackEntryAsState()
             val currentDestination = navBackStackEntry?.destination
+            Log.i("Recherche", currentDestination?.route?: "Non trouvé")
 
-            val destinations = listOf(Destination.Profil, Destination.Film)
+            val destinations = listOf(Destination.Film)
             Scaffold(
-                bottomBar = {
+                bottomBar = { if (currentDestination?.route != "profil") {
                     BottomNavigation {
                         destinations.forEach { screen ->
                             BottomNavigationItem(
@@ -39,7 +41,7 @@ class MainActivity : ComponentActivity() {
                                 onClick = { navController.navigate(screen.destination) })
                         }
                     }
-                }) { innerPadding ->
+                }}) { innerPadding ->
                 NavHost(
                     navController, startDestination = Destination.Profil.destination,
                     Modifier.padding(innerPadding)
