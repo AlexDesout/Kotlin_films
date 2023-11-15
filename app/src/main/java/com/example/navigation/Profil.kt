@@ -6,6 +6,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -17,6 +18,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,21 +36,58 @@ import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 
 @Composable
-fun Profil(onClick: () -> Unit) {
-        Column (
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceEvenly,
+fun Profil(onClick: () -> Unit, classes : WindowSizeClass) {
+    val classeHauteur = classes.heightSizeClass
+    val classeLargeur = classes.widthSizeClass
+    when (classeLargeur) {
+        WindowWidthSizeClass.Compact -> {
+            Column (
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.SpaceEvenly,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()) {
+                Top()
+                Presentation()
+                Social()
+                Button(onClick = { onClick()}) {
+                    Text(text = "Commencer")
+                }
+            }
+        } else -> {
+        Row (
+            horizontalArrangement = Arrangement.Start,
             modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight()) {
-            Top()
-            Presentation()
-            Social()
-            Button(onClick = { onClick()}) {
-                Text(text = "Commencer")
+                .fillMaxHeight()
+                .fillMaxWidth()) {
+            Column (
+                verticalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .width(500.dp)
+
+            )
+                {
+                Top()
+                Presentation()
+            }
+            Column (
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .fillMaxHeight()
+            ) {
+                Social()
+                Spacer(modifier = Modifier.height(30.dp))
+                Button(onClick = { onClick()}) {
+                    Text(text = "Commencer")
+                }
             }
         }
-}
+
+        }
+        }
+    }
 
 
 @Composable
@@ -81,24 +121,32 @@ fun Presentation() {
         Text("IUT Paul Sabatier de Castres")
 
     }
-}@Composable
+}
+@Composable
 fun Social() {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Row(
-            horizontalArrangement = Arrangement.Start,
+            horizontalArrangement = Arrangement.Center,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Icon(imageVector = Icons.Rounded.Email, contentDescription = "yoyoyo")
+            Reseau()
+            Spacer(modifier = Modifier.width(5.dp))
             Text("alexandre.desoutter@etu.iut-tlse3.fr", textAlign = TextAlign.Start)
         }
         Row(
-            horizontalArrangement = Arrangement.Start,
+            horizontalArrangement = Arrangement.Center,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Icon(imageVector = Icons.Rounded.Email, contentDescription = "yoyoyo")
-            Text("www.youtube.com", textAlign = TextAlign.Start)
+            Reseau()
+            Spacer(modifier = Modifier.width(5.dp))
+            Text("www.youtube.com", textAlign = TextAlign.Center)
         }
     }
+}
+
+@Composable
+fun Reseau(){
+    Icon(imageVector = Icons.Rounded.Email, contentDescription = "yoyoyo")
 }
