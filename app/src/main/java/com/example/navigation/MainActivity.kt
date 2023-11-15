@@ -10,6 +10,8 @@ import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -20,9 +22,11 @@ import androidx.navigation.compose.rememberNavController
 
 class MainActivity : ComponentActivity() {
 
+    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val windowSizeClass = calculateWindowSizeClass(this)
             val navController = rememberNavController()
             val navBackStackEntry by navController.currentBackStackEntryAsState()
             val currentDestination = navBackStackEntry?.destination
@@ -46,7 +50,7 @@ class MainActivity : ComponentActivity() {
                     navController, startDestination = Destination.Profil.destination,
                     Modifier.padding(innerPadding)
                 ) {
-                    composable(Destination.Profil.destination) { Profil({ navController.navigate("film") }) }
+                    composable(Destination.Profil.destination) { Profil({ navController.navigate("film") }, windowSizeClass) }
                     composable(Destination.Film.destination) { Films({ navController.navigate("profil") }) }
                 }
             }
