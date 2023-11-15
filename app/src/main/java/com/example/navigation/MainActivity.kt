@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -19,12 +20,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.navigation.ViewModel.MainViewModel
 
 class MainActivity : ComponentActivity() {
 
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val viewModel : MainViewModel by viewModels()
         setContent {
             val windowSizeClass = calculateWindowSizeClass(this)
             val navController = rememberNavController()
@@ -51,7 +54,7 @@ class MainActivity : ComponentActivity() {
                     Modifier.padding(innerPadding)
                 ) {
                     composable(Destination.Profil.destination) { Profil({ navController.navigate("film") }, windowSizeClass) }
-                    composable(Destination.Film.destination) { Films({ navController.navigate("profil") }) }
+                    composable(Destination.Film.destination) { Films(viewModel) { navController.navigate("profil") } }
                 }
             }
         }

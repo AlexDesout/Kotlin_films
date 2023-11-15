@@ -27,6 +27,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -37,6 +38,9 @@ import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 @Composable
 fun Profil(onClick: () -> Unit, classes : WindowSizeClass) {
+    val configuration = LocalConfiguration.current
+    val screenHeight = configuration.screenHeightDp.dp
+    val screenWidth = configuration.screenWidthDp.dp
     val classeHauteur = classes.heightSizeClass
     val classeLargeur = classes.widthSizeClass
     when (classeLargeur) {
@@ -61,11 +65,11 @@ fun Profil(onClick: () -> Unit, classes : WindowSizeClass) {
                 .fillMaxHeight()
                 .fillMaxWidth()) {
             Column (
-                verticalArrangement = Arrangement.Center,
+                verticalArrangement = Arrangement.SpaceAround,
+                horizontalAlignment = Alignment.Start,
                 modifier = Modifier
                     .fillMaxHeight()
-                    .width(500.dp)
-
+                    .width(screenWidth /  2)
             )
                 {
                 Top()
@@ -76,6 +80,7 @@ fun Profil(onClick: () -> Unit, classes : WindowSizeClass) {
                 verticalArrangement = Arrangement.Center,
                 modifier = Modifier
                     .fillMaxHeight()
+                    .width(screenWidth /  2)
             ) {
                 Social()
                 Spacer(modifier = Modifier.height(30.dp))
