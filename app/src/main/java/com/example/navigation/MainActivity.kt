@@ -37,6 +37,7 @@ class MainActivity : ComponentActivity() {
 
             val destinations = listOf(Destination.Film)
             Scaffold(
+
                 bottomBar = { if (currentDestination?.route != "profil") {
                     BottomNavigation {
                         destinations.forEach { screen ->
@@ -48,7 +49,8 @@ class MainActivity : ComponentActivity() {
                                 onClick = { navController.navigate(screen.destination) })
                         }
                     }
-                }}) { innerPadding ->
+                }
+                }) { innerPadding ->
                 NavHost(
                     navController, startDestination = Destination.Profil.destination,
                     Modifier.padding(innerPadding)
