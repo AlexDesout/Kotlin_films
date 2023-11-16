@@ -57,6 +57,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     composable(Destination.Profil.destination) { Profil({ navController.navigate("film") }, windowSizeClass) }
                     composable(Destination.Film.destination) { Films(viewModel) { navController.navigate("profil") } }
+                    composable(Destination.Series.destination) { Films(viewModel) { navController.navigate("profil") } }
                 }
             }
         }

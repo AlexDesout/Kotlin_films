@@ -7,5 +7,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 
 sealed class Destination(val destination: String, val label: String, val icon: ImageVector) {
     object Profil : Destination("profil", "Mon Profil", Icons.Filled.Person)
-    object Film : Destination("film", "Edition du profil", Icons.Filled.Edit)
+    object Film : Destination("film", "Films", Icons.Filled.Edit)
+    object Series : Destination("series", "Séries", Icons.Filled.Edit)
 }
