@@ -35,7 +35,7 @@ class MainActivity : ComponentActivity() {
             val currentDestination = navBackStackEntry?.destination
             Log.i("Recherche", currentDestination?.route?: "Non trouvé")
 
-            val destinations = listOf(Destination.Film)
+            val destinations = listOf(Destination.Film, Destination.Series, Destination.Actors)
             Scaffold(
 
                 bottomBar = { if (currentDestination?.route != "profil") {
@@ -57,7 +57,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     composable(Destination.Profil.destination) { Profil({ navController.navigate("film") }, windowSizeClass) }
                     composable(Destination.Film.destination) { Films(viewModel) { navController.navigate("profil") } }
-                    composable(Destination.Series.destination) { Films(viewModel) { navController.navigate("profil") } }
+                    composable(Destination.Series.destination) { Series(viewModel) { navController.navigate("series") } }
                 }
             }
         }
