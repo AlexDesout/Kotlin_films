@@ -2,6 +2,7 @@ package com.example.navigation.ViewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.navigation.Model.TmdbActor
 import com.example.navigation.Model.TmdbMovie
 import com.example.navigation.Model.TmdbSerie
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,7 +19,9 @@ class MainViewModel : ViewModel() {
 
     val api = retrofit.create(Api::class.java)
     val movies = MutableStateFlow<List<TmdbMovie>>(listOf())
+    val detailsMovie = MutableStateFlow<TmdbMovie?>(null)
     val series = MutableStateFlow<List<TmdbSerie>>(listOf())
+    val actors = MutableStateFlow<List<TmdbActor>>(listOf())
     val api_key : String = "1aafb842f039fc0eea914e8e3da318ce"
     val language : String = "fr"
 
@@ -27,9 +30,19 @@ class MainViewModel : ViewModel() {
             movies.value = api.popularmovies(api_key).results
         }
     }
+    fun getDetailsMovie(idFilm : String) {
+        viewModelScope.launch {
+            detailsMovie.value = api.detailsMovie(idFilm, api_key, language)
+        }
+    }
     fun getSeries() {
         viewModelScope.launch {
             series.value = api.popularseries(api_key, language).results
+        }
+    }
+    fun getActors() {
+        viewModelScope.launch {
+            actors.value = api.popularactors(api_key, language).results
         }
     }
 }

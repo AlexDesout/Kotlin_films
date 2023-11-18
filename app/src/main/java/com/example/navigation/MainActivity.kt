@@ -56,8 +56,20 @@ class MainActivity : ComponentActivity() {
                     Modifier.padding(innerPadding)
                 ) {
                     composable(Destination.Profil.destination) { Profil({ navController.navigate("film") }, windowSizeClass) }
-                    composable(Destination.Film.destination) { Films(viewModel) { navController.navigate("profil") } }
+                    composable(Destination.Film.destination) {
+                        Films(viewModel) { filmId ->
+                            navController.navigate("detailsFilm/$filmId")
+                        }
+                    }
                     composable(Destination.Series.destination) { Series(viewModel) { navController.navigate("series") } }
+                    composable(Destination.Actors.destination) { Actors(viewModel) { navController.navigate("actors") } }
+                    composable("detailsFilm/{filmId}") { backStackEntry ->
+                        val filmId = backStackEntry.arguments?.getString("filmId")
+                        // Utilisez filmId comme nécessaire dans votre composant DetailsFilms
+                        DetailsFilms(viewModel, filmId) {
+                            navController.navigate("series")
+                        }
+                    }
                 }
             }
         }
