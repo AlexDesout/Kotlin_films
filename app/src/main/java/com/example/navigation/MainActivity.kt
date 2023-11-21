@@ -132,17 +132,20 @@ class MainActivity : ComponentActivity() {
                     navController, startDestination = Destination.Profil.destination,
                     Modifier.padding(innerPadding)
                 ) {
+                    // Route profil
                     composable(Destination.Profil.destination) {
                         Profil(
                             { navController.navigate("film") },
                             windowSizeClass
                         )
                     }
+                    // Route liste films
                     composable(Destination.Film.destination) {
                         Films(viewModel, searchQuery) { filmId ->
                             navController.navigate("detailsFilm/$filmId")
                         }
                     }
+                    // Route liste series
                     composable(Destination.Series.destination) {
                         Series(viewModel) {
                             navController.navigate(
@@ -150,22 +153,25 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                     }
+                    // Route liste acteurs
                     composable(Destination.Actors.destination) {
                         Actors(viewModel) {
                                 actorId ->
                             navController.navigate("detailsActor/$actorId")
                         }
                     }
+                    // Route details film
                     composable("detailsFilm/{filmId}") { backStackEntry ->
                         val filmId = backStackEntry.arguments?.getString("filmId")
-                        DetailsFilms(viewModel, filmId) {
-                            navController.navigate("series")
+                        DetailsFilms(viewModel, filmId) {actorId ->
+                            navController.navigate("detailsActor/$actorId")
                         }
                     }
+                    // Route détails acteur
                     composable("detailsActor/{actorId}") { backStackEntry ->
                         val actorId = backStackEntry.arguments?.getString("actorId")
-                        DetailsActors(viewModel, actorId) {
-                            navController.navigate("series")
+                        DetailsActors(viewModel, actorId) {filmId ->
+                            navController.navigate("detailsFilm/$filmId")
                         }
                     }
                 }

@@ -58,13 +58,18 @@ data class TmdbActor(
     val release_date: String,
     val video: Boolean,
     val vote_average: Double,
-    val vote_count: Int
+    val vote_count: Int,
+    val biography: String,
+    val credits : CreditsActor
 )
 
 
 /* Les différentes sous classes */
 data class Credits(
     val cast: List<Cast>,
+)
+data class CreditsActor(
+    val cast: List<CastActor>,
 )
 
 data class Genre(
@@ -85,4 +90,24 @@ data class Cast(
     val original_name: String,
     val popularity: Double,
     val profile_path: String
+)
+
+data class CastActor(
+    val adult: Boolean,
+    val backdrop_path: String,
+    val character: String,
+    val credit_id: String,
+    val genre_ids: List<Int>,
+    val id: Int,
+    val order: Int,
+    val original_language: String,
+    val original_title: String,
+    val overview: String,
+    val popularity: Double,
+    val poster_path: String,
+    val release_date: String,
+    val title: String,
+    val video: Boolean,
+    val vote_average: Double,
+    val vote_count: Int
 )

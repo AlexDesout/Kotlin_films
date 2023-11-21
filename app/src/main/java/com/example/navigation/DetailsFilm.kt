@@ -1,6 +1,7 @@
 package com.example.navigation
 
 import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -34,7 +35,7 @@ import com.example.navigation.Model.TmdbMovie
 import com.example.navigation.ViewModel.MainModel
 
 @Composable
-fun DetailsFilms(viewModel: MainModel, filmId : String?, onClick: () -> Unit) {
+fun DetailsFilms(viewModel: MainModel, filmId : String?, onClick: (actorId: String) -> Unit) {
 
     LaunchedEffect(key1 = 0) {
         if (filmId != null) {
@@ -42,7 +43,7 @@ fun DetailsFilms(viewModel: MainModel, filmId : String?, onClick: () -> Unit) {
         }
     }
     val movie by viewModel.detailsMovie.collectAsState()
-    Log.i("Credits", movie?.credits?.cast.toString())
+    Log.i("Credits", movie?.credits?.cast?.get(0)?.id.toString())
 
     LazyVerticalGrid(
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
@@ -58,7 +59,7 @@ fun DetailsFilms(viewModel: MainModel, filmId : String?, onClick: () -> Unit) {
             item(span = { GridItemSpan(2) }) { Synopsis(movie = it) }
             item(span = { GridItemSpan(2) }) { Text(text = "Acteurs :", fontWeight = FontWeight.Bold, fontSize = 20.sp) }
             items(it.credits.cast) { movie ->
-                Actor(person = movie)
+                Actor(person = movie, onClick)
             }
         }
 
@@ -109,13 +110,15 @@ fun Poster(movie: TmdbMovie){
 }
 
 @Composable
-fun Actor(person: Cast) {
+fun Actor(person: Cast, onClick: (actorId: String) -> Unit) {
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
         ),
         modifier = Modifier
             .size(width = 100.dp, height = 240.dp)
+            .clickable { onClick(person.id.toString()) }
+
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
