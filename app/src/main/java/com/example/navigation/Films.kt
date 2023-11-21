@@ -33,15 +33,21 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.navigation.Model.TmdbMovie
 
-@Composable
-fun Films(viewModel : MainViewModel, onClick: (filmId: String) -> Unit) {
 
-    LaunchedEffect(key1 = 0){
-        viewModel.getMovies()
+@Composable
+fun Films(viewModel: MainViewModel, searchQuery: String, onClick: (filmId: String) -> Unit) {
+
+    LaunchedEffect(key1 = searchQuery) {
+        if (searchQuery == "") {
+            viewModel.getMovies()
+        }
+        else {
+            viewModel.searchMovies(searchQuery)
+        }
     }
     val movies by viewModel.movies.collectAsState()
     Log.i("Films", movies.size.toString())
-    LazyVerticalGrid (
+    LazyVerticalGrid(
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
         verticalArrangement = Arrangement.spacedBy(20.dp),
         horizontalArrangement = Arrangement.spacedBy(10.dp),
@@ -51,20 +57,20 @@ fun Films(viewModel : MainViewModel, onClick: (filmId: String) -> Unit) {
             Movie(movie, onClick)
         }
 
-        }
     }
+}
 
 
 @Composable
 fun Movie(movie: TmdbMovie, onClick: (filmId: String) -> Unit) {
-    ElevatedCard (elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp
-            ),
+    ElevatedCard(elevation = CardDefaults.cardElevation(
+        defaultElevation = 6.dp
+    ),
         modifier = Modifier
             .size(width = 100.dp, height = 240.dp)
             .clickable { onClick(movie.id) }
-    ){
-        Column (
+    ) {
+        Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxWidth()
@@ -73,7 +79,8 @@ fun Movie(movie: TmdbMovie, onClick: (filmId: String) -> Unit) {
                 model = "https://image.tmdb.org/t/p/w342/${movie.poster_path}",
                 contentDescription = movie.title
             )
-            Text(text = movie.original_title,
+            Text(
+                text = movie.original_title,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
                 overflow = TextOverflow.Ellipsis,

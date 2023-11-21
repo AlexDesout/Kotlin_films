@@ -14,6 +14,8 @@ import retrofit2.http.Path
 interface Api {
     @GET("trending/movie/week")
     suspend fun popularmovies(@Query("api_key") api_key: String):TmdbMovieResult
+    @GET("search/movie")
+    suspend fun searchmovies(@Query("api_key") api_key: String, @Query("query") filmQuery: String, @Query("language") language: String):TmdbMovieResult
     @GET("trending/tv/week")
     suspend fun popularseries(@Query("api_key") api_key: String, @Query("language") language: String):TmdbSerieResult
     @GET("trending/person/week")

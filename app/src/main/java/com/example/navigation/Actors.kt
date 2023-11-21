@@ -1,6 +1,7 @@
 package com.example.navigation
 
 import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -27,7 +28,7 @@ import com.example.navigation.Model.TmdbActor
 import com.example.navigation.Model.TmdbSerie
 
 @Composable
-fun Actors(viewModel : MainViewModel, onClick: () -> Unit) {
+fun Actors(viewModel : MainViewModel, onClick: (actorId: String) -> Unit) {
 
     LaunchedEffect(key1 = 0){
         viewModel.getActors()
@@ -41,7 +42,7 @@ fun Actors(viewModel : MainViewModel, onClick: () -> Unit) {
         columns = GridCells.Fixed(2),
     ) {
         items(actors) { actor ->
-            Actor(actor)
+            Actor(actor, onClick)
         }
     }
 
@@ -49,12 +50,13 @@ fun Actors(viewModel : MainViewModel, onClick: () -> Unit) {
 
 
 @Composable
-fun Actor(actor: TmdbActor) {
+fun Actor(actor: TmdbActor, onClick: (actorId: String) -> Unit) {
     ElevatedCard (elevation = CardDefaults.cardElevation(
         defaultElevation = 6.dp
     ),
         modifier = Modifier
             .size(width = 100.dp, height = 200.dp)
+            .clickable { onClick(actor.id.toString()) }
     ){
         Column (
             horizontalAlignment = Alignment.CenterHorizontally,

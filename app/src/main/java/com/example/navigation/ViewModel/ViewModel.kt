@@ -22,25 +22,34 @@ class MainViewModel : ViewModel() {
     val detailsMovie = MutableStateFlow<TmdbMovie?>(null)
     val series = MutableStateFlow<List<TmdbSerie>>(listOf())
     val actors = MutableStateFlow<List<TmdbActor>>(listOf())
-    val api_key : String = "1aafb842f039fc0eea914e8e3da318ce"
-    val credits : String = "credits"
-    val language : String = "fr"
+    val api_key: String = "1aafb842f039fc0eea914e8e3da318ce"
+    val credits: String = "credits"
+    val language: String = "fr"
 
     fun getMovies() {
         viewModelScope.launch {
             movies.value = api.popularmovies(api_key).results
         }
     }
-    fun getDetailsMovie(idFilm : String) {
+
+    fun searchMovies(filmQuery: String) {
+        viewModelScope.launch {
+            movies.value = api.searchmovies(api_key, filmQuery, language).results
+        }
+    }
+
+    fun getDetailsMovie(idFilm: String) {
         viewModelScope.launch {
             detailsMovie.value = api.detailsMovie(idFilm, api_key, language, credits)
         }
     }
+
     fun getSeries() {
         viewModelScope.launch {
             series.value = api.popularseries(api_key, language).results
         }
     }
+
     fun getActors() {
         viewModelScope.launch {
             actors.value = api.popularactors(api_key, language).results
