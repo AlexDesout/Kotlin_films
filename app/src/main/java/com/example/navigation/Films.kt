@@ -19,7 +19,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import com.example.navigation.ViewModel.MainViewModel
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
@@ -32,10 +31,11 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.navigation.Model.TmdbMovie
+import com.example.navigation.ViewModel.MainModel
 
 
 @Composable
-fun Films(viewModel: MainViewModel, searchQuery: String, onClick: (filmId: String) -> Unit) {
+fun Films(viewModel: MainModel, searchQuery: String, onClick: (filmId: String) -> Unit) {
 
     LaunchedEffect(key1 = searchQuery) {
         if (searchQuery == "") {

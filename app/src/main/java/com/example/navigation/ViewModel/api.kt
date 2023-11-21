@@ -1,6 +1,7 @@
 package com.example.navigation.ViewModel
 
 import com.example.navigation.Model.Credits
+import com.example.navigation.Model.TmdbActor
 import com.example.navigation.Model.TmdbActorResult
 import com.example.navigation.Model.TmdbMovie
 import com.example.navigation.Model.TmdbMovieResult
@@ -23,4 +24,7 @@ interface Api {
 
     @GET("movie/{idFilm}")
     suspend fun detailsMovie(@Path("idFilm") idFilm : String, @Query("api_key") api_key: String, @Query("language") language: String, @Query("append_to_response") credits: String):TmdbMovie
+
+    @GET("person/{idFilm}")
+    suspend fun detailsActor(@Path("idFilm") idFilm : String, @Query("api_key") api_key: String, @Query("language") language: String, @Query("append_to_response") credits: String):TmdbActor
 }

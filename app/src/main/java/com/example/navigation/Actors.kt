@@ -14,7 +14,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import com.example.navigation.ViewModel.MainViewModel
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.runtime.getValue
@@ -26,9 +25,10 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.navigation.Model.TmdbActor
 import com.example.navigation.Model.TmdbSerie
+import com.example.navigation.ViewModel.MainModel
 
 @Composable
-fun Actors(viewModel : MainViewModel, onClick: (actorId: String) -> Unit) {
+fun Actors(viewModel: MainModel, onClick: (actorId: String) -> Unit) {
 
     LaunchedEffect(key1 = 0){
         viewModel.getActors()

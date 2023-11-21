@@ -10,7 +10,8 @@ import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
-class MainViewModel : ViewModel() {
+
+class MainModel : ViewModel() {
 
     val retrofit = Retrofit.Builder()
         .baseUrl("https://api.themoviedb.org/3/")
@@ -20,6 +21,7 @@ class MainViewModel : ViewModel() {
     val api = retrofit.create(Api::class.java)
     val movies = MutableStateFlow<List<TmdbMovie>>(listOf())
     val detailsMovie = MutableStateFlow<TmdbMovie?>(null)
+    val detailsActor = MutableStateFlow<TmdbActor?>(null)
     val series = MutableStateFlow<List<TmdbSerie>>(listOf())
     val actors = MutableStateFlow<List<TmdbActor>>(listOf())
     val api_key: String = "1aafb842f039fc0eea914e8e3da318ce"
@@ -53,6 +55,12 @@ class MainViewModel : ViewModel() {
     fun getActors() {
         viewModelScope.launch {
             actors.value = api.popularactors(api_key, language).results
+        }
+    }
+
+    fun getDetailsActor(idActor: String) {
+        viewModelScope.launch {
+            detailsActor.value = api.detailsActor(idActor, api_key, language, credits)
         }
     }
 }

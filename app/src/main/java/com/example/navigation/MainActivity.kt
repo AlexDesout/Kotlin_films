@@ -10,8 +10,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -20,12 +18,10 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.material.TextField
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
@@ -35,22 +31,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.semantics.SemanticsProperties.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.navigation.ViewModel.MainViewModel
+import com.example.navigation.ViewModel.MainModel
+
 
 class MainActivity : ComponentActivity() {
 
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val viewModel: MainViewModel by viewModels()
+        val viewModel: MainModel by viewModels()
         setContent {
 
             val windowSizeClass = calculateWindowSizeClass(this)
@@ -157,22 +152,19 @@ class MainActivity : ComponentActivity() {
                     }
                     composable(Destination.Actors.destination) {
                         Actors(viewModel) {
-                            navController.navigate(
-                                "actors"
-                            )
+                                actorId ->
+                            navController.navigate("detailsActor/$actorId")
                         }
                     }
                     composable("detailsFilm/{filmId}") { backStackEntry ->
                         val filmId = backStackEntry.arguments?.getString("filmId")
-                        // Utilisez filmId comme nécessaire dans votre composant DetailsFilms
                         DetailsFilms(viewModel, filmId) {
                             navController.navigate("series")
                         }
                     }
-                    composable("detailsActors/{actorId}") { backStackEntry ->
+                    composable("detailsActor/{actorId}") { backStackEntry ->
                         val actorId = backStackEntry.arguments?.getString("actorId")
-                        // Utilisez filmId comme nécessaire dans votre composant DetailsFilms
-                        DetailsActors(actorId) {
+                        DetailsActors(viewModel, actorId) {
                             navController.navigate("series")
                         }
                     }
