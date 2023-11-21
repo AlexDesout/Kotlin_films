@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.navigation.Model.TmdbSerie
@@ -60,7 +61,7 @@ fun Serie(serie: TmdbSerie) {
         defaultElevation = 6.dp
     ),
         modifier = Modifier
-            .size(width = 100.dp, height = 200.dp)
+            .size(width = 100.dp, height = 240.dp)
     ){
         Column (
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -68,12 +69,14 @@ fun Serie(serie: TmdbSerie) {
                 .fillMaxWidth()
         ) {
             AsyncImage(
-                model = "https://image.tmdb.org/t/p/w780/${serie.backdrop_path}",
+                model = "https://image.tmdb.org/t/p/w342/${serie.poster_path}",
                 contentDescription = serie.name
             )
             Text(text = serie.name,
                 fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1
             )
             Text(text = serie.first_air_date)
         }

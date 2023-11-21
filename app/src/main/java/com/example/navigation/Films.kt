@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Button
@@ -29,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.navigation.Model.TmdbMovie
@@ -61,7 +61,7 @@ fun Movie(movie: TmdbMovie, onClick: (filmId: String) -> Unit) {
             defaultElevation = 6.dp
             ),
         modifier = Modifier
-            .size(width = 100.dp, height = 230.dp)
+            .size(width = 100.dp, height = 240.dp)
             .clickable { onClick(movie.id) }
     ){
         Column (
@@ -75,7 +75,9 @@ fun Movie(movie: TmdbMovie, onClick: (filmId: String) -> Unit) {
             )
             Text(text = movie.original_title,
                 fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1
             )
             Text(text = movie.release_date)
         }
