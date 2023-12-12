@@ -5,6 +5,7 @@ import com.example.navigation.Model.TmdbActor
 import com.example.navigation.Model.TmdbActorResult
 import com.example.navigation.Model.TmdbMovie
 import com.example.navigation.Model.TmdbMovieResult
+import com.example.navigation.Model.TmdbSerie
 import com.example.navigation.Model.TmdbSerieResult
 import org.intellij.lang.annotations.Language
 import retrofit2.http.GET
@@ -27,4 +28,7 @@ interface Api {
 
     @GET("person/{idFilm}")
     suspend fun detailsActor(@Path("idFilm") idFilm : String, @Query("api_key") api_key: String, @Query("language") language: String, @Query("append_to_response") credits: String):TmdbActor
+
+    @GET("tv/{idSerie}")
+    suspend fun detailsSerie(@Path("idSerie") idFilm : String, @Query("api_key") api_key: String, @Query("language") language: String, @Query("append_to_response") credits: String): TmdbSerie
 }

@@ -1,6 +1,7 @@
 package com.example.navigation
 
 import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -27,7 +28,7 @@ import com.example.navigation.Model.TmdbSerie
 import com.example.navigation.ViewModel.MainModel
 
 @Composable
-fun Series(viewModel: MainModel, onClick: () -> Unit) {
+fun Series(viewModel: MainModel, onClick: (serieId: String) -> Unit) {
 
     LaunchedEffect(key1 = 0){
         viewModel.getSeries()
@@ -42,7 +43,7 @@ fun Series(viewModel: MainModel, onClick: () -> Unit) {
         columns = GridCells.Fixed(2),
     ) {
         items(series) { serie ->
-            Serie(serie)
+            Serie(serie, onClick)
         }
         /*
         Text("Premier écran")
@@ -56,12 +57,13 @@ fun Series(viewModel: MainModel, onClick: () -> Unit) {
 
 
 @Composable
-fun Serie(serie: TmdbSerie) {
+fun Serie(serie: TmdbSerie, onClick: (serieId: String) -> Unit) {
     ElevatedCard (elevation = CardDefaults.cardElevation(
         defaultElevation = 6.dp
     ),
         modifier = Modifier
             .size(width = 100.dp, height = 240.dp)
+            .clickable { onClick(serie.id.toString()) }
     ){
         Column (
             horizontalAlignment = Alignment.CenterHorizontally,

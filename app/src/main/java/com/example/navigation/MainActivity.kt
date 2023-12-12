@@ -148,8 +148,8 @@ class MainActivity : ComponentActivity() {
                     // Route liste series
                     composable(Destination.Series.destination) {
                         Series(viewModel) {
-                            navController.navigate(
-                                "series"
+                            serieId-> navController.navigate(
+                                "detailsSerie/$serieId"
                             )
                         }
                     }
@@ -167,11 +167,18 @@ class MainActivity : ComponentActivity() {
                             navController.navigate("detailsActor/$actorId")
                         }
                     }
-                    // Route détails acteur
+                    // Route details acteur
                     composable("detailsActor/{actorId}") { backStackEntry ->
                         val actorId = backStackEntry.arguments?.getString("actorId")
                         DetailsActors(viewModel, actorId) {filmId ->
                             navController.navigate("detailsFilm/$filmId")
+                        }
+                    }
+                    // Route details series
+                    composable("detailsSerie/{serieId}") { backStackEntry ->
+                        val serieId = backStackEntry.arguments?.getString("serieId")
+                        DetailsSerie(viewModel, serieId) {actorId ->
+                            navController.navigate("detailsActor/$actorId")
                         }
                     }
                 }
