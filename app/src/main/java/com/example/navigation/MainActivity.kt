@@ -82,7 +82,6 @@ class MainActivity : ComponentActivity() {
                                             ),
                                         )
                                         IconButton(onClick = {
-                                            // Close the search field and reset the searchQuery
                                             isSearchVisible = false
                                             searchQuery = ""
                                         }) {
@@ -93,7 +92,6 @@ class MainActivity : ComponentActivity() {
                                         }
                                     }
                                 } else {
-                                    // Display the search icon when isSearchVisible is false
                                     IconButton(onClick = { isSearchVisible = true }) {
                                         Icon(
                                             Icons.Filled.Search,
@@ -102,8 +100,7 @@ class MainActivity : ComponentActivity() {
                                     }
                                 }
 
-                                // Other icons
-                                IconButton(onClick = { /* doSomething() */ }) {
+                                IconButton(onClick = { }) {
                                     Icon(
                                         Icons.Filled.Favorite,
                                         contentDescription = "Localized description"

@@ -51,7 +51,7 @@ fun Films(viewModel: MainModel, searchQuery: String, onClick: (filmId: String) -
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
         verticalArrangement = Arrangement.spacedBy(20.dp),
         horizontalArrangement = Arrangement.spacedBy(10.dp),
-        columns = GridCells.Fixed(2),
+        columns = GridCells.Adaptive(minSize = 128.dp),
     ) {
         items(movies) { movie ->
             Movie(movie, onClick)

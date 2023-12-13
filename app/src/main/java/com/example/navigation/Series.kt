@@ -40,7 +40,7 @@ fun Series(viewModel: MainModel, onClick: (serieId: String) -> Unit) {
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp),
         horizontalArrangement = Arrangement.spacedBy(10.dp),
-        columns = GridCells.Fixed(2),
+        columns = GridCells.Adaptive(minSize = 128.dp),
     ) {
         items(series) { serie ->
             Serie(serie, onClick)
