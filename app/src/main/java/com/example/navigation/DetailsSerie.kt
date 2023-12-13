@@ -10,10 +10,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Text
@@ -93,20 +95,20 @@ fun Synopsis(serie: TmdbSerie){
     }
 }
 @Composable
-fun Genres(serie: TmdbSerie){
+fun Genres(serie: TmdbSerie) {
     Column() {
         Text(text = "Genres :", fontWeight = FontWeight.Bold, fontSize = 20.sp)
-        Row {
-            serie.genres.forEachIndexed { index, genre ->
+        LazyRow(
+            contentPadding = PaddingValues(horizontal = 4.dp, vertical = 4.dp),
+            horizontalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+            items(serie.genres) { genre ->
                 Text(text = genre.name, fontStyle = FontStyle.Italic)
-                if (index < serie.genres.size - 1) {
-                    Text(text = ", ")
-                }
             }
         }
-
     }
 }
+
 @Composable
 fun Poster(serie: TmdbSerie){
     AsyncImage(

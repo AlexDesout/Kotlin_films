@@ -10,10 +10,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -87,18 +89,17 @@ fun Synopsis(movie: TmdbMovie){
 }
 
 @Composable
-fun Genres(movie: TmdbMovie){
+fun Genres(movie: TmdbMovie) {
     Column() {
         Text(text = "Genres :", fontWeight = FontWeight.Bold, fontSize = 20.sp)
-        Row {
-            movie.genres.forEachIndexed { index, genre ->
+        LazyRow(
+            contentPadding = PaddingValues(horizontal = 4.dp, vertical = 4.dp),
+            horizontalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+            items(movie.genres) { genre ->
                 Text(text = genre.name, fontStyle = FontStyle.Italic)
-                if (index < movie.genres.size - 1) {
-                    Text(text = ", ")
-                }
             }
         }
-
     }
 }
 @Composable
